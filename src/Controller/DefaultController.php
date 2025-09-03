@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
@@ -20,5 +21,14 @@ class DefaultController extends AbstractController
     public function simple(): Response
     {
         return new Response('Simple! Easy! Great!');
+    }
+
+    #[Route('/api/hello/{name}', methods: ['GET'])]
+    public function apiHello(string $name): JsonResponse
+    {
+        return $this->json([
+            'name' => $name,
+            'symfony' => 'rocks',
+        ]);
     }
 }
