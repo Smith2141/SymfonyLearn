@@ -2,5 +2,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ greeting }}</h1>
+    <h1>{{ name|greet }}</h1>
+    {# <h1>{{ name }}</h1> #}
 {% endblock %}
