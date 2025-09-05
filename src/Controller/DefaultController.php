@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,8 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DefaultController extends AbstractController
 {
     #[Route('/hello/{name}', name: 'index')]
-    public function index(string $name): Response
+    public function index(string $name, LoggerInterface $logger): Response
     {
+        $logger->info("Saying hello to $name");
+
         return $this->render('default/index.html.twig', [
             'name' => $name,
         ]);
