@@ -3,33 +3,35 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/blog', requirements: ['_locale' => 'en|es|fr'], name: 'blog_')]
 class BlogController extends AbstractController
 {
-    #[Route('/blog/{page}', name: 'blog_index', defaults: ['page' => 1, 'title' => 'Hello world!'])]
+    #[Route('/{_locale}', name: 'index')]
     public function index(int $page, string $title): Response
     {
         // ...
     }
 
-    /**
-     * Этот маршрут имеет жадный паттерн и определяется первым.
-     */
-    #[Route('/blog/{slug:post}', name: 'blog_show')]
+    #[Route('/{_locale}/posts/{slug}', name: 'show')]
     public function show(BlogPost $post): Response
     {
         // $post это объект, чей слаг соответствует параметру маршрутизации
         // ...
     }
 
-    /**
-     * Этот маршрут не может быть сопоставлен без определения приоритета выше, чем 0.
-     */
-    #[Route('/blog/list', name: 'blog_list', priority: 2)]
-    public function list(): Response
+    #[Route('/blog', name: 'blog_list')]
+    public function list(Request $request): Response
     {
+        $routeName = $request->attributes->get('_route');
+        $routeParameters = $request->attributes->get('_route_params');
+
+        // используйте это, чтобы получить все доступные атрибуты (не только маршрутизации):
+        $allAttributes = $request->attributes->all();
+
         // ...
     }
 }
