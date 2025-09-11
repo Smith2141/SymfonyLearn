@@ -40,4 +40,10 @@ class DefaultController extends AbstractController
             'symfony' => 'rocks',
         ]);
     }
+
+    #[Route('/share/{token}', name: 'share', requirements: ['token' => '.+'])]
+    public function share($token): Response
+    {
+        // ...
+    }
 }

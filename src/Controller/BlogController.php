@@ -8,6 +8,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BlogController extends AbstractController
 {
+    #[Route('/blog/{page}', name: 'blog_index', defaults: ['page' => 1, 'title' => 'Hello world!'])]
+    public function index(int $page, string $title): Response
+    {
+        // ...
+    }
+
     /**
      * Этот маршрут имеет жадный паттерн и определяется первым.
      */
