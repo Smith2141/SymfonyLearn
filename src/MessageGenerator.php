@@ -2,7 +2,7 @@
 
 // src/Service/MessageGenerator.php
 
-namespace App\Service;
+namespace App;
 
 class MessageGenerator
 {

@@ -5,9 +5,10 @@
 namespace App\Controller;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Attribute\DeprecatedAlias;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
@@ -18,5 +19,19 @@ class ProductController extends AbstractController
         $logger->info($result);
 
         return new Response($result);
+    }
+
+    #[Route(
+        '/product/{id}',
+        name: 'product_details',
+        alias: new DeprecatedAlias(
+            aliasName: 'product_show',
+            package: 'acme/package',
+            version: '1.2',
+        ),
+    )]
+    public function show(): Response
+    {
+        // ...
     }
 }
