@@ -26,6 +26,21 @@ class BlogController extends AbstractController
     #[Route('/blog', name: 'blog_list')]
     public function list(Request $request): Response
     {
+        // сгенерируйте URL без аргументов маршрута
+        $signUpPage = $this->generateUrl('sign_up');
+
+        // сгенарируйте URL с аргументами марашрута
+        $userProfilePage = $this->generateUrl('user_profile', [
+            'username' => $user->getUserIdentifier(),
+        ]);
+
+        // сгенерированные URL являются "абсолютными путями" по умолчанию. Передайте третий необязательный
+        // аргумент, чтобы сгенерировать другие URL (например, "абсолютный URL")
+        $signUpPage = $this->generateUrl('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        // когда маршрут локализован, Symfony по умолчанию использует текущую локаль запроса
+        // передайте другое знаениче '_locale', если вы хотите установить локаль ясно
+        $signUpPageInDutch = $this->generateUrl('sign_up', ['_locale' => 'nl']);
         $routeName = $request->attributes->get('_route');
         $routeParameters = $request->attributes->get('_route_params');
 

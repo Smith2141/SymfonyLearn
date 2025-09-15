@@ -1,36 +1,41 @@
 <?php
 
-// src/Service/SomeService.php
+// src/Command/MyCommand.php
 
-namespace App\Service;
+namespace App\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class SomeService
+// ...
+
+#[AsCommand(name: 'app:my-command')]
+class MyCommand
 {
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
-    public function someMethod(): void
+    public function __invoke(SymfonyStyle $io): int
     {
-        // ...
-
         // сгенерируйте URL без аргументов маршрута
-        $signUpPage = $this->router->generate('sign_up');
+        $signUpPage = $this->urlGenerator->generate('sign_up');
 
         // сгенерируйте URL с аргументами маршрута
-        $userProfilePage = $this->router->generate('user_profile', [
+        $userProfilePage = $this->urlGenerator->generate('user_profile', [
             'username' => $user->getUserIdentifier(),
         ]);
 
         // сгенерированные URL являются "абсолютными путями" по умолчанию. Передайте третий необязательный
         // аргумент, чтобы сгенерировать другие URL (например, "абсолютный URL")
-        $signUpPage = $this->router->generate('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $signUpPage = $this->urlGenerator->generate('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
         // когда маршрут локализован, Symfony по умолчанию использует текущую локаль запроса
         // передайте другое знаениче '_locale', если вы хотите установить локаль ясно
-        $signUpPageInDutch = $this->router->generate('sign_up', ['_locale' => 'nl']);
+        $signUpPageInDutch = $this->urlGenerator->generate('sign_up', ['_locale' => 'nl']);
+
+        // ...
     }
 }
